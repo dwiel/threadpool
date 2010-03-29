@@ -101,7 +101,7 @@ class ThreadPool:
         finally:
             self.__taskLock.release()
     
-    def joinAll(self, waitForTasks = True, waitForThreads = True):
+    def joinAll(self, waitForTasks = True, waitForThreads = True, timeout = None):
 
         """ Clear the task queue and terminate all pooled threads,
         optionally allowing the tasks and threads to finish."""
@@ -123,7 +123,7 @@ class ThreadPool:
             # Wait until all threads have exited
             if waitForThreads:
                 for t in self.__threads:
-                    t.join()
+                    t.join(timeout)
                     del t
 
             # Reset the pool for potential reuse
