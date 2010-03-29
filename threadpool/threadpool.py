@@ -154,12 +154,15 @@ class ThreadPoolThread(threading.Thread):
         while self.__isDying == False:
             cmd, args, callback = self.__pool.getNextTask()
             # If there's nothing to do, just sleep a bit
-            if cmd is None:
-                sleep(ThreadPoolThread.threadSleepTime)
-            elif callback is None:
-                cmd(args)
-            else:
-                callback(cmd(args))
+            try:
+                if cmd is None:
+                    sleep(ThreadPoolThread.threadSleepTime)
+                elif callback is None:
+                    cmd(args)
+                else:
+                    callback(cmd(args))
+            except:
+                print "Unexpected error:", sys.exc_info()[0]
     
     def goAway(self):
 
