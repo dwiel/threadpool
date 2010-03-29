@@ -27,6 +27,9 @@ class ThreadPool:
         self.__isJoining = False
         self.setThreadCount(numThreads)
 
+    def setErrorHandler(self, errorHandler):
+        self.__errorHandler = errorHandler
+
     def setThreadCount(self, newNumThreads):
 
         """ External method to set the current pool size.  Acquires
@@ -163,7 +166,10 @@ class ThreadPoolThread(threading.Thread):
                 else:
                     callback(cmd(args))
             except:
-                print "Unexpected error:", sys.exc_info()
+                if self.__pool.__errorHandler :
+                    self.__pool.__errorHandler(*sys.exc_info())
+                else :
+                    print "Unexpected error:", sys.exc_info()
     
     def goAway(self):
 
