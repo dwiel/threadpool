@@ -1,6 +1,7 @@
 # obtained from http://code.activestate.com/recipes/203871/ MIT
 import threading
 from time import sleep
+import sys
 
 # Ensure booleans exist (not needed for Python 2.2.1 or higher)
 try:
