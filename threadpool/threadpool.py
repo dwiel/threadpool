@@ -163,7 +163,7 @@ class ThreadPoolThread(threading.Thread):
                 else:
                     callback(cmd(args))
             except:
-                print "Unexpected error:", sys.exc_info()[0]
+                print "Unexpected error:", sys.exc_info()
     
     def goAway(self):
 
