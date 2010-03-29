@@ -25,10 +25,14 @@ class ThreadPool:
         self.__taskLock = threading.Condition(threading.Lock())
         self.__tasks = []
         self.__isJoining = False
+        self.__errorHandler = None
         self.setThreadCount(numThreads)
 
     def setErrorHandler(self, errorHandler):
         self.__errorHandler = errorHandler
+
+    def getErrorHandler(self) :
+        return self.__errorHandler
 
     def setThreadCount(self, newNumThreads):
 
@@ -166,8 +170,8 @@ class ThreadPoolThread(threading.Thread):
                 else:
                     callback(cmd(args))
             except:
-                if self.__pool.__errorHandler :
-                    self.__pool.__errorHandler(*sys.exc_info())
+                if self.__pool.getErrorHandler :
+                    self.__pool.getErrorHandler()(args, sys.exc_info())
                 else :
                     print "Unexpected error:", sys.exc_info()
     
