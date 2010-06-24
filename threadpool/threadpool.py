@@ -170,7 +170,7 @@ class ThreadPoolThread(threading.Thread):
                 else:
                     callback(cmd(args))
             except:
-                if self.__pool.getErrorHandler :
+                if self.__pool.getErrorHandler() :
                     self.__pool.getErrorHandler()(args, sys.exc_info())
                 else :
                     print "Unexpected error:", sys.exc_info()
@@ -206,6 +206,8 @@ if __name__ == "__main__":
         print "WaitTask starting for ", data
         print "WaitTask sleeping for %d seconds" % data
         sleep(data)
+        if data == 5:
+          raise ValueError()
         return "Waiter", data
 
     # Both tasks use the same callback
