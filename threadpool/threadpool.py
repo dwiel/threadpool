@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # obtained from http://code.activestate.com/recipes/203871/ MIT
 import threading
 from time import sleep
